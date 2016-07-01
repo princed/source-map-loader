@@ -17,6 +17,8 @@ var baseRegex = "\\s*[@#]\\s*sourceMappingURL\\s*=\\s*([^\\s]*)(?![\\S\\s]*sourc
 	// Matches DataUrls
 	regexDataUrl = /data:[^;\n]+(?:;charset=[^;\n]+)?;base64,(.*)/;
 
+var fileProtoPrefix = 'file://';
+
 module.exports = function(input, inputMap) {
 	this.cacheable && this.cacheable();
 	var resolve = this.resolve;
@@ -57,7 +59,15 @@ module.exports = function(input, inputMap) {
 		if(!map.sourcesContent || map.sourcesContent.length < map.sources.length) {
 			var sourcePrefix = map.sourceRoot ? map.sourceRoot + "/" : "";
 			map.sources = map.sources.map(function(s) { return sourcePrefix + s; });
-			delete map.sourceRoot;
+			map.sources = map.sources.map(function(s) {
+				if (s.indexOf(fileProtoPrefix) === 0) {
+					s = s.split(fileProtoPrefix)[1];
+				}
+				
+				return path.relative(context, s);
+			});
+
+            delete map.sourceRoot;
 			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
 			async.map(missingSources, function(source, callback) {
 				resolve(context, loaderUtils.urlToRequest(source), function(err, result) {

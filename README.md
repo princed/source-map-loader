@@ -12,6 +12,8 @@
   <p>Extracts source maps from existing source files (from their <code>sourceMappingURL</code>).<p>
 </div>
 
+### It's temporary fork to able to load Kotlin's slightly incorrect sourcemaps. Published internally 
+
 <h2 align="center">Install</h2>
 
 ```bash

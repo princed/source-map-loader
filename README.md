@@ -12,12 +12,12 @@
   <p>Extracts source maps from existing source files (from their <code>sourceMappingURL</code>).<p>
 </div>
 
-### It's temporary fork to be able to load Kotlin's slightly incorrect sourcemaps. Published internally 
+### It's temporary fork to be able to load Kotlin's slightly incorrect sourcemaps
 
 <h2 align="center">Install</h2>
 
 ```bash
-npm i -D source-map-loader
+npm i -D @princed/source-map-loader
 ```
 
 <h2 align="center">Usage</h2>

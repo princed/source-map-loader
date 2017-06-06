@@ -63,11 +63,11 @@ module.exports = function(input, inputMap) {
 				if (s.indexOf(fileProtoPrefix) === 0) {
 					s = s.split(fileProtoPrefix)[1];
 				}
-				
-				return path.relative(context, s);
+
+				return path.isAbsolute(s) ? path.relative(context, s) : s;
 			});
 
-            delete map.sourceRoot;
+      delete map.sourceRoot;
 			var missingSources = map.sourcesContent ? map.sources.slice(map.sourcesContent.length) : map.sources;
 			async.map(missingSources, function(source, callback) {
 				resolve(context, loaderUtils.urlToRequest(source), function(err, result) {
